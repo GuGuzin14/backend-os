@@ -1,8 +1,9 @@
 
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Equipment} from "src/equipments/entities/equipments.entites";
+import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('clients')
-export class ClientsEntity {
+export class Client{
 
     @PrimaryGeneratedColumn()
     id! : string;
@@ -46,5 +47,8 @@ export class ClientsEntity {
     @CreateDateColumn({name: 'updated_at'})
     updatedAt!: Date;
 
+    
+    @OneToMany(() => Equipment, equipment => equipment.client)
+    equipments?: Equipment[]
 
 }
