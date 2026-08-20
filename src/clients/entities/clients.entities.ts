@@ -1,12 +1,13 @@
 
 import { Equipment} from "src/equipments/entities/equipments.entites";
+import { MaintenanceCalls } from "src/maintenance-calls/entities/maintenance-calls.entities";
 import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('clients')
 export class Client{
 
     @PrimaryGeneratedColumn()
-    id! : string;
+    id! : number;
 
     @Column({length: 100})
     nome!: string;
@@ -49,6 +50,9 @@ export class Client{
 
     
     @OneToMany(() => Equipment, equipment => equipment.client)
-    equipments?: Equipment[]
+    equipments?: Equipment[];
+
+    @OneToMany(() => MaintenanceCalls, maintenanceCalls => maintenanceCalls.client)
+    maintenance?: MaintenanceCalls;
 
 }

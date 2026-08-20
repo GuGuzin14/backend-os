@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { MaintenanceCalls } from "src/maintenance-calls/entities/maintenance-calls.entities";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -19,4 +20,7 @@ export class User {
 
     @CreateDateColumn({name: 'updated_at'})
     updatedAt?: Date;
+
+    @OneToMany(() => MaintenanceCalls, maintenance => maintenance.user)
+    maintenance?: MaintenanceCalls;
 }
