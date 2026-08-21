@@ -10,7 +10,7 @@ export class User {
     nome!: string;
 
     @Column({unique: true, length: 100})
-    emall!: string;
+    email!: string;
 
     @Column({length: 100})
     passwordHash!: string;
