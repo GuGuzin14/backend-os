@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entities';
@@ -31,6 +31,14 @@ export class UserService {
         return users;
     }
 
+   findOne(id: number){
+        const user = this.userRepository.findOneBy({
+            id: id
+        })
+
+        return user;
+    }
+
    async createUsers(users: CreateUserDto): Promise<User>{
 
         const {nome, email, senha} = users;
@@ -47,7 +55,18 @@ export class UserService {
         
     }
 
+    async removeUser(id: number){
+        const user = await this.userRepository.findOne({where: {id}})
 
+        if(!user){
+            throw new NotFoundException('Usuario não encontrado')
+        }
 
+        try{
+        return this.userRepository.remove(user)
+        } catch {
+            throw new ConflictException('Esse usuario tem registros vinculados a ele.')
+        }
+    }
 
 }
