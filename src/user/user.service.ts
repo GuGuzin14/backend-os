@@ -5,6 +5,7 @@ import { User } from './entities/user.entities';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -67,6 +68,30 @@ export class UserService {
         } catch {
             throw new ConflictException('Esse usuario tem registros vinculados a ele.')
         }
+    }
+
+    async updateUser (id : number, updateUserDto: UpdateUserDto) {
+        const user = await this.userRepository.findOne({where: {id}})
+
+        if (!user) {
+            throw new NotFoundException('Usuario não encontrado')
+        }
+
+        const {nome, email, senha} = updateUserDto
+
+        if (nome !== undefined) {
+            user.nome = nome
+        }
+
+        if (email !== undefined) {
+            user.email = email
+        }
+
+        if (senha !== undefined) {
+            user.passwordHash = await bcrypt.hash(senha, 10)
+        }
+
+        return this.userRepository.save(user)
     }
 
 }

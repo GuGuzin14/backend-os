@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -25,6 +26,11 @@ export class UserController {
     @Get(':id')
      findOne(@Param('id') id: number ) {
          return this.userService.findOne(id);
+    }
+
+    @Patch(':id')
+    updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+        return this.userService.updateUser(id, updateUserDto)
     }
 
     @Delete(':id')
