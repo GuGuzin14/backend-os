@@ -1,4 +1,4 @@
-import { IsBoolean, IsDecimal, IsNumber, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsDecimal, IsString, MaxLength } from "class-validator";
 
 export class CreateMaintenanceDto {
 
@@ -21,5 +21,4 @@ export class CreateMaintenanceDto {
 
     @IsString()
     prioridade!: string;
-
 }
